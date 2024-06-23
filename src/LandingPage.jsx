@@ -19,6 +19,9 @@ import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import getLPTheme from './getLPTheme';
 
+import ModeContext from './context/ModeContext';
+
+
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
     <Box
@@ -61,11 +64,13 @@ ToggleCustomTheme.propTypes = {
   toggleCustomTheme: PropTypes.func.isRequired,
 };
 
-export default function LandingPage() {
-  const [mode, setMode] = React.useState('light');
+export default function LandingPage({ theme }) {
+  
+  const { mode, setMode } = React.useContext(ModeContext);
+  // const [mode, setMode] = React.useState('light');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const LPtheme = createTheme(getLPTheme(mode));
-  const defaultTheme = createTheme({ palette: { mode } });
+  const defaultTheme = theme;
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
@@ -76,11 +81,11 @@ export default function LandingPage() {
   };
 
   return (
-    <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
+    <ThemeProvider theme={showCustomTheme ? defaultTheme : defaultTheme}>
       <CssBaseline />
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
-      <Box sx={{ bgcolor: 'background.default', display: 'flex', alignSelf: 'center', flexDirection: 'column' }}>
+      <Box sx={{ bgcolor: theme.palette.primary, display: 'flex', alignSelf: 'center', flexDirection: 'column' }}>
         
         <LogoCollection />
         <Features />
@@ -95,10 +100,10 @@ export default function LandingPage() {
         {/* <Divider /> */}
         {/* <Footer /> */}
       </Box>
-      <ToggleCustomTheme
+      {/* <ToggleCustomTheme
         showCustomTheme={showCustomTheme}
         toggleCustomTheme={toggleCustomTheme}
-      />
+      /> */}
     </ThemeProvider>
   );
 }

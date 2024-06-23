@@ -1,7 +1,9 @@
 import React from 'react';
 import { TextField, Button, Paper, Box } from '@mui/material';
-
+import ModeContext from './context/ModeContext';
 function Login() {
+  const {mode, setMode} = React.useContext(ModeContext); // [1
+  
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
       <Paper style={{ padding: 32 }}>
