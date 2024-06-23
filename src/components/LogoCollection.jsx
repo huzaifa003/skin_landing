@@ -7,7 +7,7 @@ import { useTheme } from '@mui/system';
 const whiteLogos = [
   'https://cdn-icons-png.flaticon.com/512/9240/9240330.png',
   'https://www.tensorflow.org/static/site-assets/images/marketing/learn/learn-hero.svg',
-  'https://cdn.iconscout.com/icon/free/png-256/free-firebase-3626998-3029476.png',
+  
   'https://www.gstatic.com/devrel-devsite/prod/vc5df62aff689c916c31b2ac1e49a7e8c5ecada1bb13dcdd68aaefb1e1e9b9ec0/tensorflow/images/lockup.svg',
   
   
@@ -16,7 +16,7 @@ const whiteLogos = [
 const darkLogos = [
   'https://cdn-icons-png.flaticon.com/512/11522/11522572.png',
   'https://www.tensorflow.org/static/site-assets/images/marketing/learn/learn-hero.svg',
-  'https://cdn.iconscout.com/icon/free/png-256/free-firebase-3626998-3029476.png',
+  
   'https://www.gstatic.com/devrel-devsite/prod/vc5df62aff689c916c31b2ac1e49a7e8c5ecada1bb13dcdd68aaefb1e1e9b9ec0/tensorflow/images/lockup.svg',
   
   
