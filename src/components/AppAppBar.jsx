@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
-
+import { useTheme} from '@mui/material';
 const logoStyle = {
   width: 'auto',
   height: '40px',
@@ -23,6 +23,7 @@ const logoStyle = {
 
 function AppAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme(); // Access theme to use in conditional styling
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

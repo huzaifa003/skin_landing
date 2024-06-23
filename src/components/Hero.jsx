@@ -5,8 +5,10 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import AppleIcon from '@mui/icons-material/Apple';
+import AndroidIcon from '@mui/icons-material/Android';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 export default function Hero() {
   return (
@@ -28,18 +30,18 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           pt: { xs: 14, sm: 20 },
-          pb: { xs: 8, sm: 12 },
+          pb: { xs: 8, sm: 12, xl: 2},
         }}
       >
-        <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
+        <Stack spacing={2} sx={{ width: { xs: '100%', sm: '70%' } }}>
           <Typography
             variant="h1"
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
+              flexDirection: 'column',
               alignSelf: 'center',
               textAlign: 'center',
-              fontSize: 'clamp(3.5rem, 10vw, 4rem)',
+              fontSize: 'clamp(4rem, 10vw, 5rem)',
             }}
           >
             AI&nbsp;
@@ -47,12 +49,12 @@ export default function Hero() {
               component="span"
               variant="h1"
               sx={{
-                fontSize: 'clamp(3rem, 10vw, 4rem)',
+                fontSize: 'clamp(3.5rem, 10vw, 4.5rem)',
                 color: (theme) =>
                   theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
               }}
             >
-              Assitant Dermatologist
+              Assistant Dermatologist
             </Typography>
           </Typography>
           <Typography
@@ -60,63 +62,48 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-            Be Part of the Cutting Edge Solution that is Revolutionizing the Dermatology Industry, Join us in the venture if you qualify as a dermatologist.
+            Join the cutting-edge solution that is revolutionizing the dermatology industry.
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             alignSelf="center"
             spacing={1}
-            useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-            {/* <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autoComplete: 'off',
-                'aria-label': 'Enter your email address',
-              }}
-            /> */}
-            <Button variant="contained" color="primary">
-              Start now
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<GroupAddIcon />}
+              sx={{ fontSize: '1rem', padding: '10px 20px' }}
+            >
+              Join Our Community
             </Button>
+
           </Stack>
           <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
+            By clicking "Join Our Community" you agree to our&nbsp;
             <Link href="#" color="primary">
               Terms & Conditions
             </Link>
             .
           </Typography>
+          
+          <Typography
+            variant="body1"
+            style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+            sx={{ alignSelf: 'center', mt: { xs: 1, sm: 0 } }}
+          >
+            Download the app:
+            <Link href="#" color="primary" sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
+              <AppleIcon sx={{ mr: 0.5 }} /> iOS
+            </Link>
+            &nbsp;or&nbsp;
+            <Link href="#" color="primary" sx={{ display: 'flex', alignItems: 'center' }}>
+              <AndroidIcon sx={{ mr: 0.5 }} /> Android
+            </Link>
+          </Typography>
+         
         </Stack>
-        {/* <Box
-          id="image"
-          sx={(theme) => ({
-            mt: { xs: 8, sm: 10 },
-            alignSelf: 'center',
-            height: { xs: 200, sm: 700 },
-            width: '100%',
-            backgroundImage:
-              theme.palette.mode === 'light'
-                ? 'url("/static/images/templates/templates-images/hero-light.png")'
-                : 'url("/static/images/templates/templates-images/hero-dark.png")',
-            backgroundSize: 'cover',
-            borderRadius: '10px',
-            outline: '1px solid',
-            outlineColor:
-              theme.palette.mode === 'light'
-                ? alpha('#BFCCD9', 0.5)
-                : alpha('#9CCCFC', 0.1),
-            boxShadow:
-              theme.palette.mode === 'light'
-                ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
-                : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
-          })}
-        /> */}
       </Container>
     </Box>
   );
