@@ -1,32 +1,82 @@
 import React from 'react';
-import { TextField, Button, Paper, Box, Typography, useTheme } from '@mui/material';
+import { TextField, Button, Paper, Box, Typography } from '@mui/material';
+import ModeContext from './context/ModeContext';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import backgroundImg from '../src/assets/backgroundMedical.jpg'; 
 
 function Signup() {
-  const theme = useTheme(); // Accessing the theme
+  const { mode } = React.useContext(ModeContext);
 
-  // Example usage of theme: Adjust styles based on the theme's mode
+  const pageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '120vh',
+    position:'absolute',
+    backgroundImage: `url(${backgroundImg})`,
+    backgroundSize: 'repeat',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
+    margin: 0,
+    padding :0,
+    
+  };
+
   const paperStyle = {
-    padding: 32,
-    maxWidth: 400,
+    maxWidth: '400px',
     width: '100%',
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#fff', // Conditional background
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: mode === 'dark' ? 'rgba(30, 30, 30, 0.7)' : 'rgba(255, 255, 255, 0.7)',
+    backdropFilter: 'blur(10px)',
+    color: mode === 'dark' ? 'white' : 'black',
+    padding: '30px',
+    borderRadius: '10px',
+    border: '1px solid rgba(255, 255, 255, 0.3)'
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Paper style={paperStyle}>
+    <div style={pageStyle}>
+      <Paper elevation={6} style={paperStyle}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Sign up
+        </Typography>
         <form>
-          <Typography variant="h5" component="h1" gutterBottom>
-            Sign Up
-          </Typography>
-          <TextField fullWidth label="Email" type="email" margin="normal" />
-          <TextField fullWidth label="Password" type="password" margin="normal" />
-          <Button fullWidth variant="contained" color="primary" style={{ marginTop: 16 }}>
-            Sign Up
+          <TextField
+            fullWidth
+            label="Email"
+            type="email"
+            margin="normal"
+            InputProps={{
+              startAdornment: <EmailIcon color="primary" />,
+            }}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            margin="normal"
+            InputProps={{
+              startAdornment: <LockIcon color="primary" />,
+            }}
+            variant="outlined"
+          />
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={{ marginTop: '16px', padding: '12px 0' }}
+          >
+            Signup
           </Button>
         </form>
       </Paper>
-    </Box>
+    </div>
   );
 }
 

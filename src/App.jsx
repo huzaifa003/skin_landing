@@ -1,227 +1,63 @@
-import React, { useState, useMemo, createContext } from 'react';
+import React, { useState, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider, createTheme, CssBaseline, Box, styled } from '@mui/material';
-import ToggleCustomTheme from '../src/components/ToggleCustomTheme';
-import LandingPage from './LandingPage'; // Assume you have a LandingPage component
-import getLPTheme from './getLPTheme'; // Adjust the path to your theme file
-import './App.css';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import ModeContext from './context/ModeContext';
+
+import LandingPage from './LandingPage'; // Import your LandingPage component
 import Login from './Login';
 import Signup from './Signup';
-import Communities from './components/Communities';
+import Admin from './Admin'; // Make sure the Admin component is correctly imported
+import getLPTheme from './getLPTheme'; // Import your theme function
+import UserReports from './UserReports';
 
-
-import ModeContext from './context/ModeContext';
-const StyledBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  minHeight: '100vh',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%', // Ensures it covers full width
-  padding: theme.spacing(3), // Adjusts padding, can be omitted if not needed
-}));
-
-
-
-function App() {
-
-  const lightColorScheme = {
-    primary: '#6200ee',
-    primaryVariant: '#3700b3',
-    secondary: '#03dac6',
-    background: '#ffffff',
-    surface: '#ffffff',
-    error: '#b00020',
-    text: '#000000',
-    onPrimary: '#ffffff',
-    onSecondary: '#000000',
-    onBackground: '#000000',
-    onSurface: '#000000',
-    onError: '#ffffff',
-  };
-  
-  const darkColorScheme = {
-    primary: '#bb86fc',
-    primaryVariant: '#3700b3',
-    secondary: '#03dac6',
-    background: '#121212',
-    surface: '#333333',
-    error: '#cf6679',
-    text: '#ffffff',
-    onPrimary: '#000000',
-    onSecondary: '#000000',
-    onBackground: '#ffffff',
-    onSurface: '#ffffff',
-    onError: '#000000',
-  };
-
-  
-  const typography = {
-    fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif',
-    h1: {
-      fontWeight: 500,
-      fontSize: '2.25rem',
-    },
-    h2: {
-      fontWeight: 500,
-      fontSize: '2rem',
-    },
-    h3: {
-      fontWeight: 500,
-      fontSize: '1.75rem',
-    },
-    h4: {
-      fontWeight: 500,
-      fontSize: '1.5rem',
-    },
-    h5: {
-      fontWeight: 500,
-      fontSize: '1.25rem',
-    },
-    h6: {
-      fontWeight: 500,
-      fontSize: '1rem',
-    },
-    subtitle1: {
-      fontSize: '1rem',
-      fontWeight: 400,
-    },
-    subtitle2: {
-      fontSize: '0.875rem',
-      fontWeight: 500,
-    },
-    body1: {
-      fontSize: '1rem',
-      fontWeight: 400,
-    },
-    body2: {
-      fontSize: '0.875rem',
-      fontWeight: 400,
-    },
-    button: {
-      fontSize: '0.875rem',
-      fontWeight: 500,
-      textTransform: 'uppercase',
-    },
-    caption: {
-      fontSize: '0.75rem',
-      fontWeight: 400,
-    },
-    overline: {
-      fontSize: '0.625rem',
-      fontWeight: 400,
-      textTransform: 'uppercase',
-    },
-  };
-
-  
-
-  
-
-// const themePaper = createTheme({
-//   palette: {
-//     primary: {
-//       main: colors.primary,
-//       contrastText: colors.onPrimary,
-//     },
-//     secondary: {
-//       main: colors.secondary,
-//       contrastText: colors.onSecondary,
-//     },
-//     error: {
-//       main: colors.error,
-//       contrastText: colors.onError,
-//     },
-//     background: {
-//       default: colors.background,
-//       paper: colors.surface,
-//     },
-//     text: {
-//       primary: colors.onBackground,
-//       secondary: colors.onSurface,
-//     },
-//   },
-//   typography: typography,
-// });
-
-
-
-
-
+// Function to create theme based on mode
 function createModeTheme(mode = 'light') {
-  const colorScheme = mode === 'light' ? lightColorScheme : darkColorScheme;
-
+  const colorScheme = mode === 'light' ? getLPTheme('light') : getLPTheme('dark');
   return createTheme({
     palette: {
-      mode: mode,
-      primary: {
-        main: colorScheme.primary,
-        contrastText: colorScheme.onPrimary,
-      },
-      secondary: {
-        main: colorScheme.secondary,
-        contrastText: colorScheme.onSecondary,
-      },
-      error: {
-        main: colorScheme.error,
-        contrastText: colorScheme.onError,
-      },
-      background: {
-        default: colorScheme.background,
-        paper: colorScheme.surface,
-      },
-      text: {
-        primary: colorScheme.onBackground,
-        secondary: colorScheme.onSurface,
-      },
+      mode,
+      ...colorScheme.palette,
     },
-    typography: typography,
+    typography: colorScheme.typography,
   });
 }
 
+function App() {
+  const [mode, setMode] = useState('light');
   const [showCustomTheme, setShowCustomTheme] = useState(true);
 
-  const theme = useMemo(() => {
-    return createTheme(showCustomTheme ? getLPTheme('light') : {
-      // Default Material Design theme settings
-      palette: {
-        type: 'light',
-        primary: { main: '#1976d2' },
-        secondary: { main: '#dc004e' },
-      },
-      // Additional default properties if necessary
-    });
-  }, [showCustomTheme]);
+  const theme = useMemo(() => createModeTheme(mode), [mode, showCustomTheme]);
 
-  const toggleCustomTheme = (event, newTheme) => {
-    if (newTheme !== null) {
-      setShowCustomTheme(newTheme);
+  // Simple theme without complex customization for Admin
+  const adminTheme = createTheme({
+    palette: {
+      mode: 'light', // or 'dark' depending on your preference for Admin
     }
-  };
+  });
 
-  
-  const [mode, setMode] = React.useState('light');
-  const mateiralTheme = createTheme({ palette: { mode: mode } });
   return (
-    <div style={{ width: '100%' }}>
-      <Router>
+    <Router>
+      <div style={{ width: '100%' }}>
         <ModeContext.Provider value={{ mode, setMode }}>
-        <ThemeProvider theme={createModeTheme(mode)}>
-          <CssBaseline />
-          <StyledBox style={{ display: 'flex', justifyContent: 'center' }}>
-            
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Routes>
-              <Route path="*" element={<LandingPage theme={createModeTheme(mode)}  />} />
+              <Route path="/" element={<LandingPage />} />
               <Route path="/skin_landing/login" element={<Login />} />
               <Route path="/skin_landing/signup" element={<Signup />} />
-              <Route path="/skin_landing/communities" element={<Communities />} />
             </Routes>
-            
-          </StyledBox>
-        </ThemeProvider>
+          </ThemeProvider>
         </ModeContext.Provider>
-      </Router>
-    </div>
+
+        {/* Admin route with a different theme */}
+      
+          <Routes>
+            <Route path="/skin_landing/admin" element={<Admin />} />
+            <Route path='/skin_landing/reports' element={<UserReports/>}></Route>
+          </Routes>
+       
+      </div>
+    </Router>
   );
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, List, ListItem, ListItemText, Button, Typography, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Paper } from '@mui/material';
 import { db } from '../DB/firebase';
 import { ref, onValue, push, set } from 'firebase/database';
-import ChatBox from './ChatBox'; // Ensure this is correctly imported from its file location
+import ChatBox from './ChatBox';
 
 function CommunitiesChat() {
     const [communities, setCommunities] = useState([]);
@@ -47,28 +47,29 @@ function CommunitiesChat() {
     };
 
     return (
-        <Container maxWidth="lg">
+        <Container sx={{ p: 0, width: '100vw', maxWidth: 'none' }}> {/* Ensured the container takes full viewport width */}
             <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    <Button variant="contained" color="primary" onClick={handleOpenDialog} sx={{ my: 2 }}>
+                <Grid item xs={12} md={4}>
+                    <Button variant="contained" color="primary" onClick={handleOpenDialog} sx={{ my: 2, width: '100%' }}>
                         Add Community
                     </Button>
-                    <List component="nav">
+                    <List component="nav" sx={{ width: '100%', bgcolor: 'background.paper' }}>
                         {communities.map(community => (
                             <ListItem
                                 button
                                 key={community.id}
                                 selected={community.id === activeCommunityId}
                                 onClick={() => setActiveCommunityId(community.id)}
+                                sx={{ pl: 2 }}
                             >
-                                <ListItemText primary={community.name} />
+                                <ListItemText primary={community.name} primaryTypographyProps={{ noWrap: true }} />
                             </ListItem>
                         ))}
                     </List>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={12} md={8}>
                     {activeCommunityId ? (
-                        <Paper sx={{ overflow: 'scroll'}}>
+                        <Paper sx={{ height: '100%', p: 2 }}>
                             <ChatBox communityId={activeCommunityId} />
                         </Paper>
                     ) : (
@@ -78,7 +79,7 @@ function CommunitiesChat() {
                     )}
                 </Grid>
             </Grid>
-            <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <Dialog open={openDialog} onClose={handleCloseDialog} fullWidth maxWidth="sm">
                 <DialogTitle>Add New Community</DialogTitle>
                 <DialogContent>
                     <TextField
